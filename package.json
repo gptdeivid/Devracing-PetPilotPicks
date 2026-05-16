@@ -1,0 +1,15 @@
+{
+  "name": "petpilot-mpp-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test:mpp": "npx mppx http://localhost:3000/api/test --insecure --include"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mppx": "^0.4.12",
+    "viem": "^2.38.0"
+  }
+}

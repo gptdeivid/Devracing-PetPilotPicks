@@ -21,10 +21,10 @@
         <a href="#productos">Productos</a>
         <a href="#ficha">Ficha</a>
         <a href="#piloto">Lote piloto</a>
-        <a href="#compra">Compra</a>
+        <a href="#compra">MPP</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="header-cta" href="#compra">Comprar receta</a>
+      <a class="header-cta" href="#compra">Probar MPP</a>
     </header>
 
     <main id="top">
@@ -38,7 +38,7 @@
             inmovilizar demasiado capital.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#compra">Comprar receta - $1 USD</a>
+            <a class="button primary" href="#compra">Probar endpoint - $0.01</a>
             <a class="button secondary" href="#productos">Explorar SKUs</a>
           </div>
         </div>
@@ -287,28 +287,41 @@
       <section class="purchase-api" id="compra">
         <div class="api-copy">
           <p class="eyebrow">Compra vía API · MPP</p>
-          <h2>Receta privada por $1 USD.</h2>
+          <h2>Endpoint de prueba por $0.01.</h2>
           <p>
-            El flujo de compra está pensado para agentes de IA y desarrolladores:
-            una llamada HTTP devuelve un reto de pago y, al acreditarse, entrega
-            el markdown completo con la receta.
+            La ruta <code>/api/test</code> usa Machine Payments Protocol con
+            `mppx`, método Tempo y USDC.e. El servidor responde con HTTP 402
+            cuando no hay pago; el cliente paga, reintenta la misma request y
+            recibe el JSON protegido con un recibo de pago.
           </p>
-          <a class="button primary" href="#contacto">Registrar interés</a>
+          <div class="mpp-actions">
+            <a class="button primary" href="/api/test">Comprar con MPP</a>
+            <a class="button secondary" href="#contacto">Registrar interés</a>
+          </div>
+          <p class="mpp-note">
+            Este enlace abre el recurso protegido. Un cliente compatible con
+            MPP, como <code>mppx</code>, procesa el pago y reintenta la request.
+          </p>
         </div>
         <div class="api-card">
           <div class="api-card-head">
-            <strong>Endpoint de compra</strong>
-            <span>$1.00 USD</span>
+            <strong>Endpoint MPP</strong>
+            <span>$0.01 USD</span>
           </div>
-          <pre><code>POST /api/v1/recipes/pet-accessories-flip/buy
+          <pre><code>GET /api/test
 Accept: application/json
 
-# 402 Payment Required sin pago
-# 200 OK + markdown completo con pago MPP</code></pre>
+# Sin pago:
+# 402 Payment Required
+# WWW-Authenticate: Payment ...
+
+# Con pago:
+# Authorization: Payment ...
+# Payment-Receipt: ...</code></pre>
           <ol class="api-steps">
-            <li>Llama al endpoint y recibe el token de pago.</li>
-            <li>Procesa el pago con Machine Payments Protocol.</li>
-            <li>Reintenta la request y descarga la receta completa.</li>
+            <li>Instala dependencias y levanta el servidor con <code>npm start</code>.</li>
+            <li>Crea una cuenta local de prueba con <code>npx mppx account create</code>.</li>
+            <li>Compra el acceso con <code>npx mppx http://localhost:3000/api/test --insecure --include</code>.</li>
           </ol>
         </div>
       </section>
@@ -341,9 +354,9 @@ Accept: application/json
       <section class="disclaimer" aria-label="Aviso importante">
         <p>
           Esta receta describe una oportunidad identificada en mayo de 2026. Los
-          precios de compra, precios de reventa, comisiones y tiempos de entrega
-          pueden variar. El comprador debe validar precios actuales antes de
-          ejecutar y esto no garantiza ganancias.
+          precios de compra, precios de reventa, comisiones, tiempos de entrega
+          y configuración de pagos pueden variar. El comprador debe validar
+          precios actuales antes de ejecutar y esto no garantiza ganancias.
         </p>
       </section>
 
