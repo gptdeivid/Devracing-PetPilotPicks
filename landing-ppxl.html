@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet Flip Recipe — Profit Recipe</title>
+<meta name="description" content="Receta de arbitraje de accesorios para mascotas. Compra barato, vende con margen premium. Disponible vía API con MPP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;
+  --color-border:rgba(0,0,0,0.10);--color-divider:rgba(0,0,0,0.07);
+  --color-text:#28251d;--color-text-muted:#7a7974;--color-text-faint:#bab9b4;
+  --color-primary:#01696f;--color-primary-hover:#0c4e54;
+  --color-accent:#e8a020;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.06);--shadow-md:0 4px 16px rgba(0,0,0,0.08);--shadow-lg:0 16px 40px rgba(0,0,0,0.12);
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:20px;
+  --font-display:'Instrument Serif',Georgia,serif;
+  --font-body:'Inter','Helvetica Neue',sans-serif;
+  --text-xs:clamp(0.75rem,0.7rem + 0.25vw,0.875rem);
+  --text-sm:clamp(0.875rem,0.8rem + 0.35vw,1rem);
+  --text-base:clamp(1rem,0.95rem + 0.25vw,1.125rem);
+  --text-lg:clamp(1.125rem,1rem + 0.75vw,1.5rem);
+  --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+  --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+  --text-hero:clamp(2.5rem,1rem + 5vw,5.5rem);
+}
+[data-theme="dark"]{
+  --color-bg:#111110;--color-surface:#181715;--color-surface-2:#1e1d1b;
+  --color-border:rgba(255,255,255,0.09);--color-divider:rgba(255,255,255,0.06);
+  --color-text:#d4d3d0;--color-text-muted:#787672;--color-text-faint:#4a4947;
+  --color-primary:#4f98a3;--color-primary-hover:#227f8b;
+  --color-accent:#f0b429;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.3);--shadow-md:0 4px 16px rgba(0,0,0,0.4);--shadow-lg:0 16px 40px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);background:var(--color-bg);line-height:1.6}
+img,svg{display:block;max-width:100%}
+p,li{max-width:68ch;text-wrap:pretty}
+h1,h2,h3{text-wrap:balance;line-height:1.15}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:color-mix(in oklab,var(--color-bg) 85%,transparent);border-bottom:1px solid var(--color-divider);padding:.875rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:.5rem;font-weight:600;font-size:var(--text-sm);color:var(--color-text);text-decoration:none}
+.nav-logo svg{color:var(--color-primary)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.theme-btn{background:none;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:.375rem .5rem;color:var(--color-text-muted);cursor:pointer;font-size:var(--text-sm);line-height:1;transition:all 180ms ease}
+.theme-btn:hover{color:var(--color-text);border-color:var(--color-text-muted)}
+.badge-live{background:color-mix(in oklab,var(--color-primary) 12%,var(--color-surface));color:var(--color-primary);border:1px solid color-mix(in oklab,var(--color-primary) 25%,transparent);border-radius:9999px;font-size:var(--text-xs);font-weight:600;padding:.2rem .7rem;letter-spacing:.03em;text-transform:uppercase}
+
+/* HERO */
+.hero{padding:clamp(4rem,8vw,7rem) 1.5rem clamp(3rem,6vw,5rem);max-width:900px;margin:0 auto;text-align:center}
+.hero-eyebrow{font-size:var(--text-sm);font-weight:600;color:var(--color-primary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.25rem}
+.hero h1{font-family:var(--font-display);font-size:var(--text-hero);font-weight:400;color:var(--color-text);margin-bottom:1.5rem;font-style:italic}
+.hero h1 em{font-style:normal;color:var(--color-accent)}
+.hero-sub{font-size:var(--text-lg);color:var(--color-text-muted);max-width:56ch;margin:0 auto 2.5rem}
+.cta-row{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--color-primary);color:#fff;border:none;border-radius:var(--radius-md);padding:.75rem 1.75rem;font-size:var(--text-sm);font-weight:600;cursor:pointer;text-decoration:none;transition:background 180ms ease,transform 120ms ease,box-shadow 180ms ease;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--color-primary-hover);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-ghost{background:none;color:var(--color-text-muted);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:.75rem 1.5rem;font-size:var(--text-sm);font-weight:500;cursor:pointer;text-decoration:none;transition:all 180ms ease}
+.btn-ghost:hover{color:var(--color-text);border-color:var(--color-text-muted)}
+
+/* STATS STRIP */
+.stats{background:var(--color-surface);border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);padding:2rem 1.5rem}
+.stats-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.5rem}
+.stat{text-align:center}
+.stat-value{font-family:var(--font-display);font-size:var(--text-xl);font-style:italic;color:var(--color-text);line-height:1}
+.stat-label{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:.35rem;text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+
+/* FICHA */
+.section{padding:clamp(3rem,6vw,5rem) 1.5rem;max-width:900px;margin:0 auto}
+.section-tag{font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
+.section h2{font-family:var(--font-display);font-size:var(--text-2xl);font-style:italic;margin-bottom:1.25rem}
+.ficha-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--color-divider);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;margin-top:1.5rem}
+.ficha-item{background:var(--color-surface);padding:1.25rem 1.5rem}
+.ficha-key{font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem}
+.ficha-val{font-size:var(--text-base);font-weight:600;color:var(--color-text)}
+.ficha-val.accent{color:var(--color-accent)}
+.ficha-val.green{color:var(--color-primary)}
+
+/* WHAT YOU GET */
+.perks{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.perk{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem}
+.perk-icon{font-size:1.5rem;margin-bottom:.5rem}
+.perk-title{font-weight:600;font-size:var(--text-sm);margin-bottom:.25rem}
+.perk-desc{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5}
+
+/* API BLOCK */
+.api-section{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:2rem;margin-top:1.5rem}
+.api-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+.api-title{font-weight:700;font-size:var(--text-lg)}
+.price-tag{background:var(--color-accent);color:#111;border-radius:9999px;font-size:var(--text-sm);font-weight:700;padding:.3rem 1rem}
+.code-block{background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:1rem 1.25rem;font-family:'Menlo','Monaco','Courier New',monospace;font-size:var(--text-xs);color:var(--color-text-muted);overflow-x:auto;white-space:pre;line-height:1.7;margin-bottom:1rem}
+.code-block .method{color:var(--color-accent);font-weight:700}
+.code-block .url{color:var(--color-primary)}
+.code-block .comment{color:var(--color-text-faint)}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}
+.steps-list li{display:flex;gap:.75rem;align-items:flex-start;font-size:var(--text-sm)}
+.step-num{background:color-mix(in oklab,var(--color-primary) 15%,var(--color-surface));color:var(--color-primary);border-radius:9999px;width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700;flex-shrink:0;margin-top:.1rem}
+.divider{height:1px;background:var(--color-divider);margin:clamp(2rem,4vw,3.5rem) 0}
+
+/* DISCLAIMER */
+.disclaimer{max-width:900px;margin:0 auto;padding:0 1.5rem clamp(2.5rem,5vw,4rem);font-size:var(--text-xs);color:var(--color-text-faint);line-height:1.7}
+
+/* FOOTER */
+footer{border-top:1px solid var(--color-divider);padding:1.5rem;text-align:center;font-size:var(--text-xs);color:var(--color-text-faint)}
+
+@media(max-width:600px){
+  .ficha-grid,.perks{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(2.2rem,10vw,3.5rem)}
+  .api-header{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+    Pet Flip Recipe
+  </a>
+  <div class="nav-right">
+    <span class="badge-live">● Live</span>
+    <button class="theme-btn" data-theme-toggle aria-label="Cambiar tema">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Profit Recipe · Categoría Mascotas</p>
+  <h1>Convierte $60 USD en<br><em>$130 USD</em> en dos semanas</h1>
+  <p class="hero-sub">Una receta ejecutable de arbitraje en una de las categorías de consumo emocional con mayor crecimiento en México. Sin aduana. Sin inventario masivo. Sin experiencia previa.</p>
+  <div class="cta-row">
+    <a href="#api" class="btn-primary">Comprar receta — $1 USD</a>
+    <a href="#ficha" class="btn-ghost">Ver detalles →</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-value">~208%</div><div class="stat-label">ROI por unidad</div></div>
+    <div class="stat"><div class="stat-value">7–12</div><div class="stat-label">Días al primer ingreso</div></div>
+    <div class="stat"><div class="stat-value">$60</div><div class="stat-label">Inversión mínima USD</div></div>
+    <div class="stat"><div class="stat-value">Baja</div><div class="stat-label">Dificultad de ejecución</div></div>
+  </div>
+</div>
+
+<div class="section" id="ficha">
+  <p class="section-tag">Ficha técnica</p>
+  <h2>Lo que necesitas saber antes de comprar</h2>
+  <p style="color:var(--color-text-muted)">Esta receta cubre una oportunidad de arbitraje dentro de México, sin importaciones internacionales, sin trámites aduanales y con ciclos de rotación cortos.</p>
+
+  <div class="ficha-grid">
+    <div class="ficha-item">
+      <div class="ficha-key">Industria / Categoría</div>
+      <div class="ficha-val">Accesorios para mascotas</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">Inversión requerida</div>
+      <div class="ficha-val accent">$50–$150 USD</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">Ganancia neta por unidad</div>
+      <div class="ficha-val green">$5–$10 USD (~$100–$200 MXN)</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">ROI estimado</div>
+      <div class="ficha-val accent">110% – 210%</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">Dificultad</div>
+      <div class="ficha-val green">Baja — no requiere experiencia</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">Tiempo del ciclo</div>
+      <div class="ficha-val">7 a 15 días por batch</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">Tipo de oportunidad</div>
+      <div class="ficha-val">Asimetría de presentación + logística</div>
+    </div>
+    <div class="ficha-item">
+      <div class="ficha-key">Ventana de oportunidad</div>
+      <div class="ficha-val green">Estructural 2026 — no es moda</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="divider"></div>
+  <p class="section-tag">Contenido de la receta</p>
+  <h2>Todo lo que necesitas para ejecutarlo hoy</h2>
+  <p style="color:var(--color-text-muted)">La Profit Recipe privada incluye el producto exacto, URLs directas, números detallados y un playbook paso a paso.</p>
+
+  <div class="perks">
+    <div class="perk">
+      <div class="perk-icon">🔗</div>
+      <div class="perk-title">Producto con URL directa</div>
+      <div class="perk-desc">Saber exactamente qué comprar, dónde y qué variante funciona mejor.</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">📊</div>
+      <div class="perk-title">Unit economics completos</div>
+      <div class="perk-desc">Costo, comisiones, envío y margen neto calculados por unidad y por lote.</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">📸</div>
+      <div class="perk-title">Estrategia de presentación</div>
+      <div class="perk-desc">Las 6 fotos que necesitas, el copy que convierte y el título optimizado para ML.</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">🗓️</div>
+      <div class="perk-title">Playbook semana a semana</div>
+      <div class="perk-desc">Qué hacer exactamente en cada etapa desde la compra hasta el escalado.</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">⚠️</div>
+      <div class="perk-title">Riesgos y mitigación</div>
+      <div class="perk-desc">Los 5 errores más comunes y cómo evitarlos antes de que te cuesten dinero.</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">📈</div>
+      <div class="perk-title">Estrategia de escalado</div>
+      <div class="perk-desc">Cómo crecer de 10 a 100 unidades por mes con el mismo capital base.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="api">
+  <div class="divider"></div>
+  <p class="section-tag">Compra vía API · MPP</p>
+  <h2>Para agentes de IA y desarrolladores</h2>
+  <p style="color:var(--color-text-muted);margin-bottom:1.5rem">Esta receta se vende mediante <strong>Machine Payments Protocol (MPP)</strong>. Un agente puede comprarla en una sola llamada HTTP. Cuando el pago se acredita, el servidor devuelve el markdown completo.</p>
+
+  <div class="api-section">
+    <div class="api-header">
+      <div class="api-title">Endpoint de compra</div>
+      <div class="price-tag">$1.00 USD</div>
+    </div>
+
+    <div class="code-block"><span class="method">POST</span> <span class="url">/api/v1/recipes/pet-accessories-flip/buy</span>
+Host: api.tudominio.com
+Accept: application/json
+<span class="comment"># → 402 Payment Required (sin pago)
+# → 200 OK + markdown completo (con pago MPP)</span></div>
+
+    <div style="font-size:var(--text-sm);font-weight:600;margin-bottom:.75rem">Respuesta 402 (sin pago):</div>
+    <div class="code-block">{
+  "error": "payment_required",
+  "amount": 100,
+  "currency": "usd",
+  "payment_url": "https://pay.stripe.com/...",
+  "mpp_token": "tok_...",
+  "description": "Pet Accessories Flip — Profit Recipe"
+}</div>
+
+    <div style="font-size:var(--text-sm);font-weight:600;margin-bottom:.75rem">Respuesta 200 (pago acreditado):</div>
+    <div class="code-block">{
+  "recipe": "# 🐾 Profit Recipe: Pet Accessories Flip\n## Arbitraje Temu → MercadoLibre...",
+  "format": "markdown",
+  "version": "2026-05-16"
+}</div>
+
+    <ul class="steps-list">
+      <li><span class="step-num">1</span><span>Llama al endpoint — recibirás un <code>402 Payment Required</code> con el token de pago MPP.</span></li>
+      <li><span class="step-num">2</span><span>Procesa el desafío HTTP 402 según el protocolo MPP (<a href="https://mpp.dev/quickstart/agent" target="_blank" rel="noopener" style="color:var(--color-primary)">ver quickstart para agentes</a>).</span></li>
+      <li><span class="step-num">3</span><span>Reintenta la misma request adjuntando el pago en los headers.</span></li>
+      <li><span class="step-num">4</span><span>Recibe el markdown completo con la Profit Recipe.</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <p>Esta receta describe una oportunidad de arbitraje identificada en mayo de 2026. Los precios de compra y reventa son estimados y pueden variar. El comprador es responsable de validar precios actuales antes de ejecutar. Esta receta no garantiza ganancias. Precios en MercadoLibre, Temu y comisiones cambian regularmente — actualizar cada 30 días. Cumple con tus obligaciones fiscales (RFC, RESICO).</p>
+</div>
+
+<footer>
+  Pet Flip Recipe · Profit Recipe · Mayo 2026 · Hecho con 🐾 en México
+</footer>
+
+<script>
+(function(){
+  const btn=document.querySelector('[data-theme-toggle]');
+  const root=document.documentElement;
+  let d=root.getAttribute('data-theme')||'dark';
+  function setTheme(t){d=t;root.setAttribute('data-theme',t);if(btn)btn.innerHTML=t==='dark'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'}
+  if(btn)btn.addEventListener('click',()=>setTheme(d==='dark'?'light':'dark'));
+})();
+</script>
+</body>
+</html>
